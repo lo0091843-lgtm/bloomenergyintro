@@ -1,0 +1,6 @@
+{
+  "name": "Bloom Energy | Future-Proof Power",
+  "description": "블룸 에너지 고체산화물 연료전지(SOFC) 및 수전해(SOEC) 차세대 친환경 분산 발전 솔루션 웹사이트 - 페이지 전환, 맞춤형 에너지 설계기 및 기술 백서 라이브러리",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

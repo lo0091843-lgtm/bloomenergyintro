@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bloom-blue: #002D56;
+    --bloom-dark: #001A33;
+    --bloom-deep: #0B132B;
+    --bloom-green: #8CC63F;
+    --bloom-cyan: #00E5FF;
+    --bloom-light: #F8F9FA;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Pretendard', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+  }
+}
+
+/* Glowing orb animations */
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-24px) scale(1.05);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@keyframes flowLine {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.animate-float-slow {
+  animation: floatSlow 8s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: floatSlow 10s ease-in-out infinite reverse;
+}
+
+.tech-line {
+  background: linear-gradient(90deg, transparent, #8CC63F, #00E5FF, transparent);
+  background-size: 200% 100%;
+  animation: flowLine 2.5s linear infinite;
+}
+
+.tech-line-cyan {
+  background: linear-gradient(90deg, transparent, #00E5FF, transparent);
+  background-size: 200% 100%;
+  animation: flowLine 2s linear infinite;
+}
+
+/* Glassmorphism cards */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-card-light {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 4px 20px -2px rgba(0, 45, 86, 0.05);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card-light:hover {
+  transform: translateY(-4px);
+  border-color: rgba(140, 198, 63, 0.6);
+  box-shadow: 0 16px 32px -8px rgba(0, 45, 86, 0.12);
+}

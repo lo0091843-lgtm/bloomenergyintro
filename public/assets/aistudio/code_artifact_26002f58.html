@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloom Energy | Future-Proof Power</title>
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Custom Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bloom-blue': '#002D56',
+                        'bloom-green': '#8CC63F',
+                        'bloom-light': '#F8F9FA',
+                        'bloom-dark': '#001A33',
+                    },
+                    fontFamily: {
+                        sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+    <style>
+        body {
+            background-color: #FFFFFF;
+            color: #333333;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Hero Background Animation (Particle / Glow effect) */
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            overflow: hidden;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #002D56 0%, #001A33 100%);
+        }
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(140, 198, 63, 0.2) 0%, rgba(140, 198, 63, 0) 70%);
+            filter: blur(40px);
+            animation: float 10s ease-in-out infinite alternate;
+        }
+        .orb-1 { width: 600px; height: 600px; top: -100px; left: -200px; }
+        .orb-2 { width: 400px; height: 400px; bottom: 100px; right: -100px; animation-delay: -3s; background: radial-gradient(circle, rgba(140, 198, 63, 0.15) 0%, rgba(140, 198, 63, 0) 70%); }
+        .orb-3 { width: 300px; height: 300px; top: 300px; left: 50%; transform: translateX(-50%); animation-delay: -5s; }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 0.2s; }
+        .reveal-delay-2 { transition-delay: 0.4s; }
+        .reveal-delay-3 { transition-delay: 0.6s; }
+
+        /* Light Mode Card */
+        .light-card {
+            background: #FFFFFF;
+            border: 1px solid #E5E7EB;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+        .light-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(140, 198, 63, 0.5);
+            box-shadow: 0 20px 40px -10px rgba(0, 45, 86, 0.1);
+        }
+
+        /* Tech Diagram Elements */
+        .tech-line {
+            background: linear-gradient(90deg, transparent, #8CC63F, transparent);
+            background-size: 200% 100%;
+            animation: flowLine 3s linear infinite;
+        }
+        @keyframes flowLine {
+            0% { background-position: 100% 0; }
+            100% { background-position: -100% 0; }
+        }
+
+        /* Chart Animation */
+        .chart-bar {
+            transform-origin: bottom;
+            transform: scaleY(0);
+            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .chart-bar.active {
+            transform: scaleY(1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="fixed w-full z-50 transition-all duration-300 bg-bloom-blue/95 backdrop-blur-md border-b border-white/10" id="header">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold tracking-tighter text-white">
+                BLOOM<span class="text-bloom-green">.</span>
+            </div>
+            <nav class="hidden md:flex space-x-8 text-sm font-medium text-gray-200">
+                <a href="/#technology" class="hover:text-bloom-green transition-colors">기술 소개</a>
+                <a href="/#solutions" class="hover:text-bloom-green transition-colors">맞춤 솔루션</a>
+                <a href="/#sustainability" class="hover:text-bloom-green transition-colors">지속가능성</a>
+                <a href="/#whitepapers" class="hover:text-bloom-green transition-colors">기술 백서</a>
+                <a href="/#company" class="hover:text-bloom-green transition-colors">회사 소개</a>
+            </nav>
+            <button onclick="window.location.href='/#solutions'" class="hidden sm:inline-flex px-4 py-2 text-xs font-bold text-bloom-blue bg-bloom-green rounded-lg hover:bg-white transition-colors">
+                솔루션 설계
+            </button>
+        </div>
+    </header>
+
+    <!-- Section 1: Hero -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <div class="hero-bg">
+            <div class="glow-orb orb-1"></div>
+            <div class="glow-orb orb-2"></div>
+            <div class="glow-orb orb-3"></div>
+            <!-- Grid lines overlay -->
+            <div class="absolute inset-0 opacity-[0.05]" style="background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px); background-size: 50px 50px;"></div>
+        </div>
+        
+        <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+            <span class="inline-block py-1 px-3 rounded-full border border-bloom-green text-bloom-green text-sm font-semibold tracking-wider mb-6 reveal bg-bloom-blue/50">미래를 대비하는 완벽한 전력</span>
+            <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-8 tracking-tight reveal reveal-delay-1 text-white">
+                에너지의 한계를 넘다,<br/>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-bloom-green">중단 없는 혁신의 시작</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-300 font-light mb-12 max-w-3xl mx-auto leading-relaxed reveal reveal-delay-2">
+                전 세계 최고 수준의 효율을 자랑하는 고체산화물 연료전지(SOFC) 기술.<br class="hidden md:block"/>귀사의 비즈니스에 완벽한 에너지 독립과 탄소중립을 동시에 선사합니다.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal reveal-delay-3">
+                <a href="/#solutions" class="w-full sm:w-auto px-8 py-4 bg-bloom-green text-bloom-blue font-bold rounded-lg hover:bg-white transition-colors duration-300 shadow-[0_0_20px_rgba(140,198,63,0.3)]">
+                    맞춤형 에너지 솔루션 설계하기
+                </a>
+                <a href="/#whitepapers" class="w-full sm:w-auto px-8 py-4 bg-transparent border border-bloom-green text-bloom-green font-bold rounded-lg hover:bg-bloom-green/10 transition-colors duration-300">
+                    최신 기술 백서 다운로드 (2026)
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW Section: Technical Principles (30% weight) -->
+    <section class="py-32 bg-white relative border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-24 reveal">
+                <span class="inline-block py-1 px-3 rounded-full border border-bloom-blue/20 text-bloom-blue text-sm font-bold tracking-wider mb-4">CORE TECHNOLOGY PRINCIPLES</span>
+                <h2 class="text-3xl md:text-5xl font-bold mb-6 text-bloom-blue tracking-tight">연소 없는 혁신, 전기화학 반응의 원리</h2>
+                <p class="text-gray-600 text-lg max-w-3xl mx-auto leading-relaxed">블룸 에너지의 고체산화물 기술은 연료를 '태우는' 과거의 방식이 아닙니다. <br class="hidden md:block"/>연료와 산소가 화학적으로 결합하여 직접 전기를 생산하는 가장 진보된 발전 시스템입니다.</p>
+            </div>
+
+            <!-- Diagram Area -->
+            <div class="relative bg-bloom-light rounded-3xl p-8 md:p-16 mb-20 reveal reveal-delay-1 border border-gray-200 overflow-hidden">
+                <!-- Abstract Diagram Background -->
+                <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#002D56 2px, transparent 2px); background-size: 30px 30px;"></div>
+                
+                <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12">
+                    
+                    <!-- Fuel Input -->
+                    <div class="flex-1 text-center">
+                        <div class="w-24 h-24 mx-auto bg-white rounded-full flex items-center justify-center shadow-lg border-4 border-bloom-light mb-6">
+                            <svg class="w-10 h-10 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold text-bloom-blue mb-2">1. 유연한 연료 공급</h4>
+                        <p class="text-sm text-gray-500">천연가스, 바이오가스, 수소 등<br/>다양한 연료가 음극(Anode)으로 유입</p>
+                    </div>
+
+                    <!-- Flow Icon -->
+                    <div class="hidden lg:block w-32 h-1 tech-line rounded-full"></div>
+
+                    <!-- Reaction Core (Solid Oxide) -->
+                    <div class="flex-1 text-center">
+                        <div class="w-32 h-32 mx-auto bg-bloom-blue rounded-2xl flex flex-col items-center justify-center shadow-xl shadow-bloom-blue/20 mb-6 relative overflow-hidden group border-2 border-bloom-green">
+                            <div class="absolute inset-0 bg-bloom-green opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+                            <svg class="w-12 h-12 text-bloom-green mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            <span class="text-white text-xs font-bold uppercase tracking-wider">고체산화물 전해질</span>
+                        </div>
+                        <h4 class="text-xl font-bold text-bloom-blue mb-2">2. 전기화학 반응</h4>
+                        <p class="text-sm text-gray-500">800°C 고온에서 산소 이온이 이동하며<br/>전자를 방출, 직류(DC) 전력 직접 생성</p>
+                    </div>
+
+                    <!-- Flow Icon -->
+                    <div class="hidden lg:block w-32 h-1 tech-line rounded-full"></div>
+
+                    <!-- Clean Output -->
+                    <div class="flex-1 text-center">
+                        <div class="w-24 h-24 mx-auto bg-white rounded-full flex items-center justify-center shadow-lg border-4 border-bloom-light mb-6">
+                            <svg class="w-10 h-10 text-bloom-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold text-bloom-blue mb-2">3. 무공해 청정 배출</h4>
+                        <p class="text-sm text-gray-500">초미세먼지, SOx, NOx 0% 배출<br/>부산물은 순수한 수증기와 열뿐</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Detailed SOFC / SOEC Features -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 reveal reveal-delay-2">
+                <div>
+                    <h3 class="text-2xl font-bold text-bloom-blue mb-4 border-l-4 border-bloom-green pl-4">최고 수준의 발전 효율 (SOFC)</h3>
+                    <p class="text-gray-600 mb-6">
+                        블룸 에너지의 발전 시스템은 화학 에너지를 기계적(터빈), 열 에너지 과정을 거치지 않고 바로 전기로 변환합니다. 이로 인해 기존 연소 기반 발전소 대비 최대 60% 이상의 높은 초기 발전 효율을 자랑하며, 배출되는 폐열을 활용할 경우 효율은 최대 90%에 달합니다. 
+                    </p>
+                    <ul class="space-y-3 text-sm text-gray-700">
+                        <li class="flex items-center"><svg class="w-5 h-5 text-bloom-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 송전 및 배전 과정의 전력 손실 제로 (On-site 발전)</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-bloom-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 유지보수를 위한 기계적 구동 부품 최소화</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-bloom-blue mb-4 border-l-4 border-bloom-green pl-4">가역적 수소 생산 기술 (SOEC)</h3>
+                    <p class="text-gray-600 mb-6">
+                        블룸의 고체산화물 플랫폼은 역방향으로도 작동 가능합니다. 고온의 수증기와 잉여 신재생 에너지를 주입하면, 물을 분해하여 그린 수소를 생산하는 고체산화물 수전해기(SOEC)로 완벽하게 전환됩니다. 
+                    </p>
+                    <ul class="space-y-3 text-sm text-gray-700">
+                        <li class="flex items-center"><svg class="w-5 h-5 text-bloom-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 기존 수전해 방식(PEM/ALK) 대비 15~45% 전력 소모 절감</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-bloom-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 원자력 및 산업 폐열을 활용한 극대화된 수소 생산 경제성</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Core Innovation (Updated to Light Theme) -->
+    <section class="py-32 bg-bloom-light relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4 text-bloom-blue">블룸 에너지의 3대 혁신 가치</h2>
+                <p class="text-gray-600 text-lg">어떤 환경에서도 타협하지 않는 압도적인 비즈니스 우위</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="light-card rounded-2xl p-10 reveal reveal-delay-1">
+                    <div class="w-14 h-14 rounded-full bg-bloom-green/20 flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-bloom-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-bloom-blue">Always-On<br/><span class="text-lg text-gray-500 font-normal mt-1 block">무중단 전력</span></h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        99.99% 이상의 압도적인 가동률. 기상 이변이나 외부 전력망 붕괴에도 끄떡없는 마이크로그리드 기술로 귀사의 비즈니스 연속성을 완벽히 보장합니다.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="light-card rounded-2xl p-10 reveal reveal-delay-2">
+                    <div class="w-14 h-14 rounded-full bg-bloom-green/20 flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-bloom-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-bloom-blue">Zero Emission Path<br/><span class="text-lg text-gray-500 font-normal mt-1 block">탄소 중립</span></h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        화석연료 연소 과정이 없는 전기화학 반응을 통해 획기적인 CO2 절감은 물론, 유해 가스(NOx, SOx, 미세먼지)를 전혀 배출하지 않는 친환경 솔루션입니다.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="light-card rounded-2xl p-10 reveal reveal-delay-3">
+                    <div class="w-14 h-14 rounded-full bg-bloom-green/20 flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-bloom-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-bloom-blue">Fuel Flexibility<br/><span class="text-lg text-gray-500 font-normal mt-1 block">연료 유연성</span></h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        천연가스, 바이오가스를 넘어 궁극의 친환경 에너지인 순수 수소까지 하드웨어 변경 없이 유연하게 전환하여 사용할 수 있는 미래 지향적 플랫폼입니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Proven Trust & Data -->
+    <section class="py-32 bg-bloom-dark border-t border-b border-bloom-blue/50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center mb-24">
+                <div class="reveal">
+                    <h2 class="text-3xl md:text-5xl font-bold mb-6 leading-tight text-white">숫자로 증명된<br/>글로벌 에너지 리더십</h2>
+                    <p class="text-gray-400 text-lg mb-8">전 세계 주요 데이터센터와 생산 시설이 이미 블룸 에너지와 함께 탄소 중립을 향한 여정을 걷고 있습니다.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 reveal reveal-delay-1">
+                    <div class="p-8 border-l-2 border-bloom-green bg-white/5 rounded-r-2xl">
+                        <div class="text-gray-400 text-sm font-bold uppercase tracking-wider mb-2">누적 생산 전력량 (TWh)</div>
+                        <div class="text-5xl font-bold text-white flex items-baseline">
+                            <span class="counter" data-target="25000">0</span>
+                            <span class="text-bloom-green ml-1">+</span>
+                        </div>
+                    </div>
+                    <div class="p-8 border-l-2 border-bloom-green bg-white/5 rounded-r-2xl">
+                        <div class="text-gray-400 text-sm font-bold uppercase tracking-wider mb-2">절감된 탄소 배출량 (Metric Tons)</div>
+                        <div class="text-5xl font-bold text-white flex items-baseline">
+                            <span class="counter" data-target="10000000">0</span>
+                            <span class="text-bloom-green ml-1">+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Partners Area -->
+            <div class="reveal reveal-delay-2">
+                <p class="text-center text-sm text-gray-500 font-semibold tracking-widest uppercase mb-8">Trusted by Global Fortune 100 Companies</p>
+                <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-500 text-white">
+                    <!-- Placeholder Logos using simple SVGs/Text -->
+                    <div class="h-12 flex items-center justify-center font-bold text-xl tracking-tighter"><svg class="w-8 h-8 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z"/></svg> TECH CORP</div>
+                    <div class="h-12 flex items-center justify-center font-bold text-xl tracking-tighter"><svg class="w-8 h-8 mr-2" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> GLOBAL DATA</div>
+                    <div class="h-12 flex items-center justify-center font-bold text-xl tracking-tighter"><svg class="w-8 h-8 mr-2" fill="currentColor" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="4"/></svg> HEALTH INC.</div>
+                    <div class="h-12 flex items-center justify-center font-bold text-xl tracking-tighter"><svg class="w-8 h-8 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L22 12 12 22 2 12z"/></svg> MANUFACTURE X</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: The Next Frontier: Hydrogen -->
+    <section class="py-32 bg-white text-bloom-blue transition-colors duration-700">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center gap-16">
+                <div class="md:w-1/2 reveal">
+                    <span class="inline-block py-1 px-3 rounded-full border border-bloom-blue/20 text-bloom-blue text-sm font-bold tracking-wider mb-6">HYDROGEN ECONOMY</span>
+                    <h2 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">가장 깨끗한 수소를<br/>가장 경제적으로 생산하다.</h2>
+                    <p class="text-gray-600 text-lg mb-8 leading-relaxed">
+                        블룸 에너지의 차세대 고체산화물 수전해(SOEC) 기술은 기존 수전해 방식 대비 전력 소모를 최대 45% 줄여, 글로벌 그린 수소 생태계를 가장 빠르게 현실화합니다.
+                    </p>
+                    <a href="/#whitepapers" class="inline-flex items-center font-bold text-bloom-blue hover:text-bloom-green transition-colors group">
+                        수전해 기술 백서 다운로드
+                        <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </a>
+                </div>
+                
+                <!-- Dynamic Chart Placeholder -->
+                <div class="md:w-1/2 w-full reveal reveal-delay-2">
+                    <div class="bg-gray-50 rounded-3xl p-8 border border-gray-200 shadow-lg" id="chart-container">
+                        <div class="flex justify-between items-end h-64 gap-2 mb-4">
+                            <!-- Chart bars (Animated via JS on scroll) -->
+                            <div class="w-1/4 bg-gray-300 rounded-t-md h-[100%] flex flex-col justify-end text-center pb-2 relative group">
+                                <span class="absolute -top-8 w-full text-sm font-bold text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity">100%</span>
+                            </div>
+                            <div class="w-1/4 bg-gray-400 rounded-t-md h-[80%] flex flex-col justify-end text-center pb-2 relative group">
+                                <span class="absolute -top-8 w-full text-sm font-bold text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity">80%</span>
+                            </div>
+                            <div class="w-1/4 bg-bloom-blue/50 rounded-t-md h-[60%] flex flex-col justify-end text-center pb-2 relative group">
+                                <span class="absolute -top-8 w-full text-sm font-bold text-bloom-blue opacity-0 group-hover:opacity-100 transition-opacity">60%</span>
+                            </div>
+                            <div class="w-1/4 bg-bloom-green rounded-t-md h-[45%] flex flex-col justify-end text-center pb-2 relative group chart-bar shadow-[0_0_20px_rgba(140,198,63,0.4)]">
+                                <span class="absolute -top-8 w-full text-sm font-bold text-bloom-green">45% ↓</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between text-xs font-bold text-gray-400 px-2 uppercase">
+                            <span>Legacy ALK</span>
+                            <span>Legacy PEM</span>
+                            <span>Standard SOEC</span>
+                            <span class="text-bloom-blue">Bloom SOEC</span>
+                        </div>
+                        <p class="text-center text-xs text-gray-500 mt-6">* 전력 소모량 비교 (kWh/kg H2) 모델링 데이터</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-bloom-blue text-gray-400 py-12 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+            <div class="text-xl font-bold tracking-tighter text-white mb-4 md:mb-0">
+                BLOOM<span class="text-bloom-green">.</span>
+            </div>
+            <div class="text-sm">
+                &copy; 2026 Bloom Energy Corporation. All rights reserved. (Prototype)
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Interactions -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Scroll Reveal Animation using Intersection Observer
+            const revealElements = document.querySelectorAll('.reveal');
+            const chartBars = document.querySelectorAll('.chart-bar');
+            
+            const revealOptions = {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        
+                        // If the chart container is revealed, animate the bar
+                        if(entry.target.querySelector('#chart-container') || entry.target.closest('#chart-container')) {
+                             chartBars.forEach(bar => bar.classList.add('active'));
+                        }
+                        
+                        observer.unobserve(entry.target); // Run once
+                    }
+                });
+            }, revealOptions);
+
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            // 2. Number Counter Animation
+            const counters = document.querySelectorAll('.counter');
+            let hasAnimated = false;
+
+            const animateCounters = () => {
+                counters.forEach(counter => {
+                    const target = +counter.getAttribute('data-target');
+                    const duration = 2000; // ms
+                    const stepTime = Math.abs(Math.floor(duration / target));
+                    
+                    let startTimestamp = null;
+                    const step = (timestamp) => {
+                        if (!startTimestamp) startTimestamp = timestamp;
+                        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                        // Ease out cubic
+                        const easeProgress = 1 - Math.pow(1 - progress, 3);
+                        const current = Math.floor(easeProgress * target);
+                        
+                        // Format with commas
+                        counter.innerText = current.toLocaleString();
+                        
+                        if (progress < 1) {
+                            window.requestAnimationFrame(step);
+                        } else {
+                            counter.innerText = target.toLocaleString();
+                        }
+                    };
+                    window.requestAnimationFrame(step);
+                });
+            };
+
+            const counterObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !hasAnimated) {
+                        animateCounters();
+                        hasAnimated = true;
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            if(counters.length > 0) {
+                counterObserver.observe(counters[0].closest('section'));
+            }
+            
+            // 3. Header background on scroll
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('shadow-lg');
+                } else {
+                    header.classList.remove('shadow-lg');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
